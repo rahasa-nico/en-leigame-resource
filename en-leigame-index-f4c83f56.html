@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雷竞技 · 信息卡片介绍页</title>
+    <style>
+        /* 全局重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e1e2f;
+            line-height: 1.6;
+        }
+
+        /* 深色头图 hero */
+        .hero {
+            background: linear-gradient(145deg, #0e121d 0%, #1b2335 100%);
+            color: #e9edf5;
+            padding: 3rem 1.5rem 2.8rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .sub {
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #b6c3dd;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        /* 用途卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.8rem 1.5rem 1.6rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+            transition: transform 0.18s ease, box-shadow 0.2s;
+            border: 1px solid #eef1f7;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+            border-color: #d6def0;
+        }
+
+        .card .emoji {
+            font-size: 2rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #121826;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: #3d4155;
+        }
+
+        /* 段落区 — 自然链接嵌入 */
+        .info-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 2.2rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e4e9f2;
+            margin-bottom: 2.5rem;
+        }
+
+        .info-section h2 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            color: #121826;
+            border-left: 4px solid #2f62e0;
+            padding-left: 1rem;
+        }
+
+        .info-section p {
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            color: #1f2335;
+        }
+
+        .info-section a {
+            color: #2f62e0;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(47, 98, 224, 0.25);
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .info-section a:hover {
+            color: #1a41b0;
+            border-bottom-color: #1a41b0;
+        }
+
+        /* 适合人群双列 */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .group-box {
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 1.6rem 1.6rem 1.8rem;
+            border: 1px solid #e5ebf5;
+        }
+
+        .group-box h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #0f172a;
+        }
+
+        .group-box ul {
+            list-style: none;
+        }
+
+        .group-box li {
+            padding: 0.35rem 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.4rem;
+            color: #2d3248;
+        }
+
+        .group-box li::before {
+            content: "·";
+            color: #2f62e0;
+            font-weight: 700;
+            margin-right: 0.35rem;
+        }
+
+        /* FAQ 摘要 */
+        .faq-mini {
+            background: transparent;
+            margin-top: 1.8rem;
+        }
+
+        .faq-mini details {
+            border-bottom: 1px solid #dde3ed;
+            padding: 0.9rem 0;
+        }
+
+        .faq-mini summary {
+            font-weight: 500;
+            cursor: pointer;
+            color: #0a0f1f;
+            padding: 0.2rem 0;
+            font-size: 1rem;
+        }
+
+        .faq-mini details p {
+            margin-top: 0.6rem;
+            color: #3d425b;
+            font-size: 0.95rem;
+            padding-left: 0.3rem;
+        }
+
+        .faq-mini summary::-webkit-details-marker {
+            color: #2f62e0;
+        }
+
+        /* 自然提示 */
+        .note {
+            display: inline-block;
+            background: #eef3fe;
+            border-radius: 40px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+            color: #1f2a4a;
+            border: 1px solid #d3dff7;
+            margin-top: 0.5rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #dce2ee;
+            margin: 2rem 0 0.5rem;
+        }
+
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 1.8rem 1rem 3rem;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 1.2rem;
+            }
+
+            .card-grid {
+                gap: 1.2rem;
+            }
+
+            .info-section {
+                padding: 1.5rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .hero .sub {
+                font-size: 0.95rem;
+            }
+
+            .card {
+                padding: 1.4rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图 -->
+    <header class="hero">
+        <h1>雷竞技 · 稳定入口</h1>
+        <p class="sub">一个更贴近日常的页面说明，帮你快速了解它的用途、场景与适合谁。</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 用途卡片 3 枚 -->
+        <div class="card-grid">
+            <div class="card">
+                <span class="emoji">🖥️</span>
+                <h3>浏览与发现</h3>
+                <p>通过干净的信息卡片了解<strong>雷竞技</strong>提供的各类内容，从休闲信息到赛事动态都能找到入口。</p>
+            </div>
+            <div class="card">
+                <span class="emoji">📱</span>
+                <h3>跨设备访问</h3>
+                <p>无论是在电脑还是手机浏览器上，页面都保持清晰节奏，随时打开都能快速定位。</p>
+            </div>
+            <div class="card">
+                <span class="emoji">🔎</span>
+                <h3>自然引导</h3>
+                <p>介绍文字里安排了直达链接，不需要刻意寻找。比如你正在看的这段里就有 <a href="https://en-leigame.com" style="color:#2f62e0;text-decoration:underline;">雷竞技</a>，顺手即达。</p>
+            </div>
+        </div>
+
+        <!-- 自然链接段落 + 页面说明 -->
+        <div class="info-section">
+            <h2>关于这个页面</h2>
+            <p>
+                这份介绍页的目的，是给想简单了解 <a href="https://en-leigame.com">雷竞技</a> 的人一个稳定、不绕弯的起点。
+                没有复杂的跳转说明，也不堆砌宣传用语，只把最核心的用途和人群列出来。
+            </p>
+            <p>
+                在日常使用中，一个直接的信息卡片往往比长文更高效。所以这里用卡片划分用途，用短段落说明场景，同时把链接嵌入自然语句——
+                比如下面这句：如果你正在考虑换一个更稳定的浏览入口，不妨先看看 <a href="https://en-leigame.com">雷竞技</a> 的页面结构是否合你习惯。
+            </p>
+            <span class="note">📌 链接文本保持简洁，不额外加“官网”“点击”等词</span>
+        </div>
+
+        <!-- 适合人群 两列 -->
+        <div class="two-col">
+            <div class="group-box">
+                <h3>🙋 日常浏览者</h3>
+                <ul>
+                    <li>想要一个信息集中、卡片清晰的页面</li>
+                    <li>不喜欢弹窗和过度引导的浏览环境</li>
+                    <li>希望从一处稳定的地址开始探索</li>
+                </ul>
+            </div>
+            <div class="group-box">
+                <h3>👥 内容关注者</h3>
+                <ul>
+                    <li>对雷竞技相关动态和更新保持兴趣</li>
+                    <li>愿意通过简单分类快速定位</li>
+                    <li>偏好轻量、克制的页面质感</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- FAQ 摘要（2个问题） -->
+        <div class="faq-mini">
+            <details>
+                <summary>这个页面和雷竞技是什么关系？</summary>
+                <p>这是一个说明性质的介绍页，指向 <a href="https://en-leigame.com">雷竞技</a> 主站。页面内容只做功能和使用场景的描述，不替代原站功能。</p>
+            </details>
+            <details>
+                <summary>链接可以直接点吗？会不会跳转到别处？</summary>
+                <p>所有 <a href="https://en-leigame.com">雷竞技</a> 链接都指向同一个地址，你可以放心点击，不会有额外跳转或干扰。</p>
+            </details>
+        </div>
+
+        <hr>
+        <p style="text-align:center; font-size:0.85rem; color:#69728c; margin-top:1.5rem;">
+            信息卡片式介绍 · 深色头图 &amp; 浅色正文 · 自然链接不夸张
+        </p>
+    </div>
+
+</body>
+</html>
